@@ -1,3 +1,6 @@
+# what is smb
+SMB (Server Message Block) is a network file-sharing protocol that lets computers read, write, and manage files, printers, and other resources over a network.
+
 # objective 
 Demonstrate how Windows records SMB share access events and how Wazuh detects and enriches these events using custom detection rules.
 
