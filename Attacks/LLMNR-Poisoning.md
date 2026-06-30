@@ -35,7 +35,7 @@ LLMNR enhances connectivity in local networks by allowing devices to communicate
 ## step 3
 	 Host will connect to the attacker respond, attacker will use the hash to crack the password 
 
-d# MITRE ATT&CK Mapping
+# MITRE ATT&CK Mapping
 T1557.001 – LLMNR/NBT-NS Poisoning
 ### Related Technique
 T1557 – Adversary-in-the-Middle (parent technique) **T1040 – Network Sniffing** (often used together for credential capture) **T1110.001 – Password Guessing** (credentials harvested via LLMNR can be brute-forced offline)
