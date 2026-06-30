@@ -19,7 +19,7 @@ crackmapexec
 ![brut-forcing-smb-user.png](../image/smb/brut-forcing-smb-user.png)
 smbclient 
 - accessing the shard folder 
-![](../image/smb/Accessing the shard folder.png)
+![](../image/smb/Accessing-the-shard-folder.png)
 wazuh
 - collect logs 
 
