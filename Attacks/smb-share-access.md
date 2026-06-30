@@ -16,7 +16,7 @@ Test User
 # Tools used
 crackmapexec 
 - Verify SMB authentication using domain credentials.
-![[brut-forcing-smb-user.png]]
+![brut-forcing-smb-user.png](../image/smb/brut-forcing-smb-user.png)
 smbclient 
 - accessing the shard folder 
 ![[Accessing the shard folder.png]]
