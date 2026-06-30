@@ -19,7 +19,7 @@ crackmapexec
 ![brut-forcing-smb-user.png](../image/smb/brut-forcing-smb-user.png)
 smbclient 
 - accessing the shard folder 
-![[Accessing the shard folder.png]]
+![](../image/smb/Accessing the shard folder.png)
 wazuh
 - collect logs 
 
@@ -49,26 +49,26 @@ Disconnect from the SMB session.
 ## Event ID 4624
 successful logon
 Generated when the user successfully authenticates to the SMB service
-![[account-logon.png]]
+![](../image/smb/account-logon.png)
 ## Event ID 5140
 Network Share Access
 Generated when the user accesses a shared folder on the server.
 This is the primary event used for detecting SMB share access.
-![[shard-object-accessed.png]]
+![](../image/smb/shard-object-accessed.png)
 ## Event ID 4634
 logoff
-![[smb-logoff.png]]
+![](../image/smb/smb-logoff.png)
 
 # wazuh custom rule
 # Event ID 4624
- A custom Wazuh rule was created to detect successful SMB share access by monitoring Windows Event ID 4624. The rule extracts important fields such as the username and generates a readable alert for security monitoring ![[custom-rule-4624.png]]
-Detection Result ![[4624-rule-works.png]]
+ A custom Wazuh rule was created to detect successful SMB share access by monitoring Windows Event ID 4624. The rule extracts important fields such as the username and generates a readable alert for security monitoring ![](../image/smb/custom-rule-4624.png)
+Detection Result ![](../image/smb/4624-rule-works.png)
 
 ## Event ID 5140
 A custom Wazuh rule was created to detect successful SMB share file access by monitoring Windows Event ID 5140. The rule extracts important fields such as the username, share name and ip address for security monitoring
-![[custom-rule-5140.png]]
+![](../image/smb/custom-rule-5140.png)
 Detection Result 
-![[5140-rule-works.png]]
+![](../image/smb/5140-rule-works.png)
 
 ## why detection matter
 SMB is one of the most commonly abused protocols in Windows environments. Attackers often use SMB during lateral movement, credential theft, and data collection. Monitoring successful SMB access helps defenders identify unusual user behavior, unauthorized file access, and potential compromise.
