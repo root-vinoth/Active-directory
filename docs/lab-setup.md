@@ -90,9 +90,8 @@ Install-ADDSForest
 command
 Install-ADDSForest `
 -DomainName "pekka.local"
-```
 
-output  
+#output  
 WARNING: A delegation for this DNS server cannot be created...
 
 Success Restart Needed Exit Code Feature Result
@@ -100,6 +99,7 @@ Success Restart Needed Exit Code Feature Result
 True    No             Success   {Active Directory Domain Services}
 
 WARNING: The server is now being restarted...
+```
 
 ↓
 
@@ -136,7 +136,7 @@ WARNING: The server is now being restarted because Active Directory Domain Servi
 
 Download wazuh  
 ```powershell
-**Powershell Command**  
+#Powershell Command 
 Invoke-WebRequest -Uri "https://packages.wazuh.com/4.x/windows/wazuh-agent-4.9.2-1.msi" -OutFile "$env:USERPROFILE\Downloads\wazuh-agent.msi"
 ```
 >change you wazuh version
@@ -154,7 +154,7 @@ Start-Process msiexec.exe -ArgumentList "/i "$env:USERPROFILE\Downloads\wazuh-ag
 
 Check the configuration   
 ```text
-**Path to the file**
+#Path to the file
 C:\Program Files (x86)\ossec-agent\ossec.conf
 
 <ossec_config>
