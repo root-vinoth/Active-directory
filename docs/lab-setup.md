@@ -22,7 +22,7 @@ This lab was built to simulate a Windows Active Directory enterprise environment
 | VM    | CPU |    RAM |  Disk |
 | ----- | --: | -----: | ----: |
 | DC01  |   4 |   4 GB | 80 GB |
-| WIN11 |   2 | 2.5 GB | 40 GB |
+| WIN10 |   2 | 2.5 GB | 40 GB |
 | KALI  |   2 |   4 GB | 40 GB |
 | wazuh |   2 |      3 | 20 GB |
 # Network Configuration
@@ -50,7 +50,7 @@ Windows 10 Home
 
 ↓  
 
-Domain Join Attempt![](windows-home-failed-join.jpg)
+Domain Join Attempt![](../image/Docs/windows-home-failed-join.png)
 
 ↓  
 
@@ -69,7 +69,7 @@ Restart
 ↓
 
 Join pekka.local Domain  
-![](windows-pro-join.jpg)
+![](../image/Docs/windows-pro-join.png)
 
 # Installing AD DS in windows server
 Install AD DS role    
@@ -77,7 +77,9 @@ Install AD DS role
 Installing AD
 `Install-WindowsFeature -Name AD-Domain-Services`
 output
-Success Restart Needed Exit Code Feature Result ------- -------------- --------- -------------- True No Success {Active Directory Domain Services, Remote```
+Success Restart Needed Exit Code Feature Result 
+------- -------------- --------- -------------- 
+True No Success {Active Directory Domain Services, Remote ...
 ```
 ↓
 
