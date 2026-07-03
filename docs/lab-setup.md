@@ -26,13 +26,15 @@ This lab was built to simulate a Windows Active Directory enterprise environment
 | KALI  |   2 |   4 GB | 40 GB |
 | wazuh |   2 |      3 | 20 GB |
 # Network Configuration
+```text 
 Diagram
        +----------------+
-     | VMware Network |
+       | VMware Network |
 	   +----------------+
-      |           |            |         |
+      |     |      |      |
     DC01  WIN10  Kali   wazuh
 
+```
 192.168.x.x
 
 - Network Mode: NAT  
@@ -44,45 +46,53 @@ Diagram
 # windows Edition Upgrade (client)
 Before joining the client machine to the Active Directory domain, I discovered that the virtual machine was running **Windows 10 Home**. This edition does not support joining an Active Directory domain because Microsoft does not include the Domain Join feature in the Home edition. To continue building the lab, I upgraded the operating system to **Windows 10 Pro** using a valid license. After the upgrade was completed, the machine was successfully joined to the `pekka.local` domain
 
-Windows 10 Home
-        │
-        ▼
-Domain Join Attempt![](../image/Docs/windows-home-failed-join.jpg)
-        │
-        ▼
-Feature Not Supported
-        │
-        ▼
-Upgrade to Windows 10 Pro
-microsoft generic key to upgrade 
-W269N-WFGWX-YVC9B-4J6C9-T83GX -->do it offline 
-        │
-        ▼
-Restart
-        │
-        ▼
-Join pekka.local Domain
-![](../image/Docs/windows-pro-join.jpg)
+Windows 10 Home  
+
+↓  
+
+Domain Join Attempt![](windows-home-failed-join.jpg)
+
+↓  
+
+Feature Not Supported  
+
+↓  
+  
+Upgrade to Windows 10 Pro  
+microsoft generic key to upgrade   
+W269N-WFGWX-YVC9B-4J6C9-T83GX -->do it offline   
+
+↓  
+
+Restart  
+
+↓
+
+Join pekka.local Domain  
+![](windows-pro-join.jpg)
 
 # Installing AD DS in windows server
-Install AD DS role
+Install AD DS role    
+```powershell
 Installing AD
-	Install-WindowsFeature -Name AD-Domain-Services
-	
+`Install-WindowsFeature -Name AD-Domain-Services`
 output
-Success Restart Needed Exit Code Feature Result ------- -------------- --------- -------------- True No Success {Active Directory Domain Services, Remote ...
+Success Restart Needed Exit Code Feature Result ------- -------------- --------- -------------- True No Success {Active Directory Domain Services, Remote```
+```
 ↓
 
 Install-windowsFeature
 
 ↓
 
-Install-ADDSForest
+Install-ADDSForest  
+```powershell
 command
 Install-ADDSForest `
 -DomainName "pekka.local"
+```
 
-output
+output  
 WARNING: A delegation for this DNS server cannot be created...
 
 Success Restart Needed Exit Code Feature Result
@@ -97,11 +107,14 @@ Automatic Restart
 
 ↓
 
-Promote to Domain Controller
+Promote to Domain Controller  
+```powershell
 command 
 Install-ADDSForest `
 -DomainName "pekka.local"
+```
 
+```powershell
 output
 SafeModePassword: ************
 ConfirmSafeModePassword: ************
@@ -117,24 +130,30 @@ True    No             Success   {Active Directory Domain Services}
 
 
 WARNING: The server is now being restarted because Active Directory Domain Services has been installed or removed.
+```
 
 # Installing wazuh agent 
 
-Download wazuh
-**Power shell Command**
+Download wazuh  
+```powershell
+**Powershell Command**  
 Invoke-WebRequest -Uri "https://packages.wazuh.com/4.x/windows/wazuh-agent-4.9.2-1.msi" -OutFile "$env:USERPROFILE\Downloads\wazuh-agent.msi"
-<--change you wazuh version-->
+```
+>change you wazuh version
 
 ↓
 
-Install and Pass Configuration Variables
+Install and Pass Configuration Variables  
 **Power shell command**
-`%% Start-Process msiexec.exe -ArgumentList "/i "$env:USERPROFILE\Downloads\wazuh-agent.msi" /q WAZUH_MANAGER="192.168.1.100"" -Wait %%`
-<-- Replace the wazuh manager IP with the IP assigned to you wazuh manager -->
+```powershell
+Start-Process msiexec.exe -ArgumentList "/i "$env:USERPROFILE\Downloads\wazuh-agent.msi" /q WAZUH_MANAGER="192.168.1.100"" -Wait ```
+```
+> Replace the wazuh manager IP with the IP assigned to you wazuh manager 
 
 ↓
 
-Check the configuration 
+Check the configuration   
+```text
 **Path to the file**
 C:\Program Files (x86)\ossec-agent\ossec.conf
 
@@ -147,19 +166,23 @@ C:\Program Files (x86)\ossec-agent\ossec.conf
       `<protocol>tcp</protocol>`
     `</server>`
 <-- check the IP is your wazuh manager IP -->
+```
+
 
 ↓
 
-Start the Wazuh Service
-!Set the service to automatic startup
-`%% Set-Service -Name "Wazuh" -StartupType Automatic %%`
+```powershell
+#Start the Wazuh Service  
+#Set the service to automatic startup
+Set-Service -Name "Wazuh" -StartupType Automatic
 
-Start the service
-`Start-Service -Name "Wazuh"`
+#Start the service  
+Start-Service -Name "Wazuh"
 
-verity the connection
-`Get-Content "C:\Program Files (x86)\ossec-agent\ossec.log" -Tail 20`
-<--Read the last few line of local log file-->
+#verity the connection
+Get-Content "C:\Program Files (x86)\ossec-agent\ossec.log" -Tail 20
+#Read the last few line of local log file
+```
 # Installing Sysmon 
 
 Download Sysmon
@@ -170,37 +193,42 @@ Sysmon was installed on the Windows endpoint to provide detailed telemetry, such
 ↓
 
 Install Sysmon
-command
-
-**Download the Sysmon ZIP file**
+```powershell
+#Download the Sysmon ZIP file
 Invoke-WebRequest -Uri "https://download.sysinternals.com/files/Sysmon.zip" -OutFile "$env:USERPROFILE\Downloads\Sysmon.zip"
 
-**Extract the contents to**
+#Extract the contents to**
 C:\Sysmon Expand-Archive -Path "$env:USERPROFILE\Downloads\Sysmon.zip" -DestinationPath "C:\Sysmon" -Force
 
-**Navigate to the extracted folder**
+#Navigate to the extracted folder**
 cd C:\Sysmon
+```
 
 ↓
 
-installation
+```powershell
+#Installation
 .\Sysmon64.exe -accepteula -i
-
+```
 ↓
 
-Verify Sysmon Service
-**command**
+```powershell
+#Verify Sysmon Service
 Get-Service -Name "Sysmon64"
+```
 
-**Output**
+```powershell
+#Output
 PS C:\Users\vboxuser> Get-Service -Name "Sysmon64"
 
 Status   Name               DisplayName
 ------   ----               -----------
 Running  Sysmon64           Sysmon64
 
+```
 ↓
 
+```text
 Configure Wazuh Agent (ossec.conf)
 File path C:\Program Files (x86)\ossec-agent\ossec.conf
 
@@ -210,12 +238,14 @@ File path C:\Program Files (x86)\ossec-agent\ossec.conf
   `<location>Microsoft-Windows-Sysmon/Operational</location>`
    `<log_format>eventchannel</log_format>`
  `</localfile>`
+```
 
 ↓
 
-Restart Wazuh Agent
-**command**
+```powershell
+#Restart Wazuh Agent
 Restart-Service Wazuh
+```
 
 ↓
 
