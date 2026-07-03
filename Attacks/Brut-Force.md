@@ -31,14 +31,14 @@ password : marketing123!
 ## Event ID 4624
 successful logon
 Generated when the user successfully authenticates to the SMB service
-![](image/Brut_Force/account-logon.png)
+![](../image/Brut_Force/account-logon.png)
 
 ## Event ID 4625
 failed logon 
 ![](../image/Brut_Force/failed_logon.png)
 
 ## Event ID 4634
-logoff![](image/Brut_Force/smb-logoff.png)
+logoff![](../image/Brut_Force/smb-logoff.png)
 # MITRE ATT&CK Mapping
 T1110 – Brute Force
 ### Sub-Techniques:
